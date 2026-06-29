@@ -11,347 +11,126 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  :root, [data-theme="light"] {
-    --color-bg: #f5f5f0;
-    --color-surface: #ffffff;
-    --color-surface-2: #f9f9f7;
-    --color-border: #e0ddd8;
-    --color-text: #1a1a16;
-    --color-text-muted: #6b6a67;
-    --color-text-faint: #a8a7a4;
-    --color-primary: #01696f;
-    --color-primary-hover: #0c4e54;
-    --color-primary-light: #e0eeee;
-    --color-success: #437a22;
-    --color-warning: #c55700;
-    --color-error: #a12c2c;
-    --color-orange: #da7101;
-    --color-mtr: #c00;
-    --shadow-sm: 0 1px 3px rgba(0,0,0,0.07);
-    --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
-    --radius-sm: 0.375rem;
-    --radius-md: 0.625rem;
-    --radius-lg: 1rem;
-    --radius-full: 9999px;
-    --transition: 180ms cubic-bezier(0.16,1,0.3,1);
+  :root,[data-theme="light"]{
+    --bg:#f5f5f0;--surface:#fff;--surface2:#f9f9f7;--border:#e0ddd8;
+    --text:#1a1a16;--muted:#6b6a67;--faint:#a8a7a4;
+    --primary:#01696f;--primary-h:#0c4e54;--primary-l:#e0eeee;
+    --success:#437a22;--warn:#c55700;--err:#a12c2c;--orange:#da7101;
+    --mtr:#c00;--shadow-s:0 1px 3px rgba(0,0,0,.07);--shadow-m:0 4px 12px rgba(0,0,0,.08);
+    --r-s:.375rem;--r-m:.625rem;--r-l:1rem;--r-f:9999px;--t:180ms cubic-bezier(.16,1,.3,1);
   }
-  [data-theme="dark"] {
-    --color-bg: #131311;
-    --color-surface: #1c1c1a;
-    --color-surface-2: #232320;
-    --color-border: #333330;
-    --color-text: #d4d3d0;
-    --color-text-muted: #7a7975;
-    --color-text-faint: #555450;
-    --color-primary: #4f9ea3;
-    --color-primary-hover: #3a8389;
-    --color-primary-light: #1e3434;
-    --color-success: #6daa45;
-    --color-warning: #fdab43;
-    --color-error: #e06060;
-    --color-orange: #fdab43;
-    --color-mtr: #ff6666;
-    --shadow-sm: 0 1px 3px rgba(0,0,0,0.25);
-    --shadow-md: 0 4px 12px rgba(0,0,0,0.35);
+  [data-theme="dark"]{
+    --bg:#131311;--surface:#1c1c1a;--surface2:#232320;--border:#333330;
+    --text:#d4d3d0;--muted:#7a7975;--faint:#555450;
+    --primary:#4f9ea3;--primary-h:#3a8389;--primary-l:#1e3434;
+    --success:#6daa45;--warn:#fdab43;--err:#e06060;--orange:#fdab43;
+    --mtr:#ff6666;--shadow-s:0 1px 3px rgba(0,0,0,.25);--shadow-m:0 4px 12px rgba(0,0,0,.35);
   }
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html { -webkit-text-size-adjust: none; scroll-behavior: smooth; }
-  body {
-    font-family: 'Noto Sans TC', sans-serif;
-    font-size: 1rem;
-    background: var(--color-bg);
-    color: var(--color-text);
-    min-height: 100dvh;
-    -webkit-font-smoothing: antialiased;
-  }
-  button { cursor: pointer; background: none; border: none; font: inherit; color: inherit; }
-  input, select { font: inherit; color: inherit; }
-
-  .header {
-    position: sticky; top: 0; z-index: 100;
-    background: var(--color-surface);
-    border-bottom: 1px solid var(--color-border);
-    padding: 0.875rem 1rem;
-    display: flex; align-items: center; justify-content: space-between;
-    box-shadow: var(--shadow-sm);
-  }
-  .header-logo {
-    display: flex; align-items: center; gap: 0.5rem;
-    font-size: 1.1rem; font-weight: 700; color: var(--color-primary);
-  }
-  .header-logo svg { flex-shrink: 0; }
-  .theme-btn {
-    width: 2.5rem; height: 2.5rem;
-    border-radius: var(--radius-full);
-    display: flex; align-items: center; justify-content: center;
-    color: var(--color-text-muted);
-    transition: background var(--transition), color var(--transition);
-  }
-  .theme-btn:hover { background: var(--color-border); color: var(--color-text); }
-  .theme-btn:active { background: var(--color-border); }
-
-  .main { padding: 1rem; max-width: 480px; margin: 0 auto; padding-bottom: 5rem; }
-
-  .section-label {
-    font-size: 0.75rem; font-weight: 600;
-    letter-spacing: 0.06em; text-transform: uppercase;
-    color: var(--color-text-muted);
-    margin-bottom: 0.5rem; margin-top: 1.25rem;
-  }
-
-  .search-card {
-    background: var(--color-surface);
-    border-radius: var(--radius-lg);
-    border: 1px solid var(--color-border);
-    padding: 1rem;
-    box-shadow: var(--shadow-sm);
-  }
-  .field-row { display: flex; flex-direction: column; gap: 0.375rem; margin-bottom: 0.75rem; }
-  .field-row:last-child { margin-bottom: 0; }
-  .field-label { font-size: 0.8125rem; font-weight: 500; color: var(--color-text-muted); }
-  .field-input {
-    background: var(--color-bg);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-    padding: 0.625rem 0.75rem;
-    font-size: 1rem; width: 100%; color: var(--color-text);
-    transition: border-color var(--transition), box-shadow var(--transition);
-    appearance: none; -webkit-appearance: none;
-  }
-  .field-input:focus {
-    outline: none; border-color: var(--color-primary);
-    box-shadow: 0 0 0 3px rgba(1,105,111,0.15);
-  }
-  .search-btn {
-    background: var(--color-primary); color: #fff;
-    border-radius: var(--radius-md);
-    padding: 0.625rem 1rem;
-    font-size: 0.9375rem; font-weight: 600;
-    width: 100%; margin-top: 0.75rem;
-    transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
-    box-shadow: var(--shadow-sm);
-  }
-  .search-btn:hover { background: var(--color-primary-hover); }
-  .search-btn:active { transform: scale(0.98); }
-  .search-btn:disabled { opacity: 0.55; pointer-events: none; }
-
-  /* Company tag badges */
-  .company-tag {
-    display: inline-block;
-    font-size: 0.65rem; font-weight: 700;
-    padding: 0.1rem 0.35rem;
-    border-radius: 0.25rem;
-    margin-left: 0.3rem;
-    vertical-align: middle;
-    letter-spacing: 0.03em;
-  }
-  .tag-kmb { background: #c00; color: #fff; }
-  .tag-ctb { background: #f5a623; color: #000; }
-  .tag-mtr { background: #c00; color: #fff; }
-
-  .stop-list {
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-lg);
-    overflow: hidden; margin-top: 0.5rem;
-  }
-  .stop-item {
-    display: flex; align-items: center;
-    padding: 0.75rem 1rem;
-    border-bottom: 1px solid var(--color-border);
-    cursor: pointer;
-    transition: background var(--transition);
-    gap: 0.75rem;
-  }
-  .stop-item:last-child { border-bottom: none; }
-  .stop-item:hover { background: var(--color-surface-2); }
-  .stop-item:active { background: var(--color-primary-light); }
-  .stop-item.selected { background: var(--color-primary-light); }
-  .stop-seq {
-    font-size: 0.75rem; font-weight: 700;
-    color: var(--color-text-faint);
-    width: 1.5rem; flex-shrink: 0; text-align: center;
-  }
-  .stop-info { flex: 1; min-width: 0; }
-  .stop-name { font-size: 0.9375rem; font-weight: 600; }
-  .stop-name-en { font-size: 0.75rem; color: var(--color-text-muted); }
-  .stop-check { color: var(--color-primary); flex-shrink: 0; display: none; }
-  .stop-item.selected .stop-check { display: block; }
-
-  .eta-card {
-    background: var(--color-surface);
-    border-radius: var(--radius-lg);
-    border: 1px solid var(--color-border);
-    box-shadow: var(--shadow-md); overflow: hidden;
-  }
-  .eta-card-header {
-    background: var(--color-primary); color: #fff;
-    padding: 0.875rem 1rem;
-    display: flex; align-items: center; justify-content: space-between; gap: 0.5rem;
-  }
-  .eta-card-header.mtr-header { background: var(--color-mtr); }
-  .eta-route-badge { font-size: 1.5rem; font-weight: 700; letter-spacing: -0.01em; line-height: 1; }
-  .eta-dest { font-size: 0.8125rem; opacity: 0.88; }
-  .eta-stop-name { font-size: 0.9rem; font-weight: 600; }
-  .refresh-btn {
-    width: 2.25rem; height: 2.25rem;
-    border-radius: var(--radius-full);
-    background: rgba(255,255,255,0.15);
-    display: flex; align-items: center; justify-content: center;
-    color: #fff; flex-shrink: 0;
-    transition: background var(--transition), transform var(--transition);
-  }
-  .refresh-btn:hover { background: rgba(255,255,255,0.25); }
-  .refresh-btn:active { transform: rotate(180deg); }
-  .refresh-btn.spinning svg { animation: spin 0.7s linear infinite; }
-  @keyframes spin { to { transform: rotate(360deg); } }
-
-  .eta-rows { padding: 0.25rem 0; }
-  .eta-row {
-    display: flex; align-items: center;
-    padding: 0.875rem 1rem;
-    border-bottom: 1px solid var(--color-border);
-    gap: 0.75rem;
-  }
-  .eta-row:last-child { border-bottom: none; }
-  .eta-index {
-    width: 1.5rem; height: 1.5rem;
-    border-radius: var(--radius-full);
-    background: var(--color-border);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 0.75rem; font-weight: 700;
-    color: var(--color-text-muted); flex-shrink: 0;
-  }
-  .eta-time-block { flex: 1; }
-  .eta-time-hm { font-size: 1.05rem; font-weight: 700; }
-  .eta-remark { font-size: 0.75rem; color: var(--color-text-muted); }
-  .eta-mins { font-size: 1.05rem; font-weight: 700; text-align: right; }
-  .eta-mins.arriving { color: var(--color-warning); }
-  .eta-mins.soon { color: var(--color-orange); }
-  .eta-mins.normal { color: var(--color-success); }
-  .eta-mins.gone { color: var(--color-error); }
-  .eta-mins-label { font-size: 0.7rem; color: var(--color-text-muted); text-align: right; }
-
-  .status-box {
-    text-align: center; padding: 2.5rem 1.5rem; color: var(--color-text-muted);
-  }
-  .status-box svg { margin: 0 auto 0.75rem; }
-  .status-box h3 { font-size: 1rem; font-weight: 600; color: var(--color-text); margin-bottom: 0.375rem; }
-  .status-box p { font-size: 0.875rem; }
-
-  .fav-header {
-    display: flex; align-items: center; justify-content: space-between;
-    margin-bottom: 0.5rem; margin-top: 1.25rem;
-  }
-  .fav-list { display: flex; flex-direction: column; gap: 0.5rem; }
-  .fav-item {
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-    padding: 0.75rem 1rem;
-    display: flex; align-items: center; gap: 0.75rem;
-    cursor: pointer;
-    transition: background var(--transition), border-color var(--transition);
-    box-shadow: var(--shadow-sm);
-  }
-  .fav-item:hover { background: var(--color-surface-2); border-color: var(--color-primary); }
-  .fav-item:active { background: var(--color-primary-light); }
-  .fav-route-pill {
-    background: var(--color-primary); color: #fff;
-    border-radius: var(--radius-sm);
-    padding: 0.25rem 0.5rem;
-    font-size: 0.875rem; font-weight: 700;
-    flex-shrink: 0; min-width: 2.75rem; text-align: center;
-  }
-  .fav-route-pill.mtr-pill { background: var(--color-mtr); }
-  .fav-info { flex: 1; min-width: 0; }
-  .fav-stop-name { font-size: 0.9375rem; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .fav-dest { font-size: 0.75rem; color: var(--color-text-muted); }
-  .fav-del {
-    width: 2rem; height: 2rem;
-    border-radius: var(--radius-full);
-    display: flex; align-items: center; justify-content: center;
-    color: var(--color-text-faint); flex-shrink: 0;
-    transition: background var(--transition), color var(--transition);
-  }
-  .fav-del:hover { background: var(--color-border); color: var(--color-error); }
-  .save-fav-btn {
-    background: none;
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-    padding: 0.5rem 0.875rem;
-    font-size: 0.8125rem; color: var(--color-text-muted);
-    display: flex; align-items: center; gap: 0.375rem;
-    transition: all var(--transition);
-    margin-top: 0.75rem; width: 100%; justify-content: center;
-  }
-  .save-fav-btn:hover { border-color: var(--color-primary); color: var(--color-primary); background: var(--color-primary-light); }
-
-  .updated-at {
-    font-size: 0.75rem; color: var(--color-text-faint);
-    text-align: center; padding: 0.75rem 1rem;
-    border-top: 1px solid var(--color-border);
-  }
-
-  .toast {
-    position: fixed; bottom: 1.5rem; left: 50%;
-    transform: translateX(-50%) translateY(100px);
-    background: var(--color-text); color: var(--color-bg);
-    padding: 0.625rem 1.25rem;
-    border-radius: var(--radius-full);
-    font-size: 0.875rem; font-weight: 500;
-    z-index: 200;
-    transition: transform 300ms cubic-bezier(0.16,1,0.3,1), opacity 300ms;
-    opacity: 0; white-space: nowrap; box-shadow: var(--shadow-md);
-  }
-  .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
-
-  .fav-save-hint {
-    font-size: 0.72rem; color: var(--color-text-faint);
-    text-align: center; margin-top: 0.4rem;
-  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:none}
+  body{font-family:'Noto Sans TC',sans-serif;font-size:1rem;background:var(--bg);color:var(--text);min-height:100dvh;-webkit-font-smoothing:antialiased}
+  button{cursor:pointer;background:none;border:none;font:inherit;color:inherit}
+  input,select{font:inherit;color:inherit}
+  .header{position:sticky;top:0;z-index:100;background:var(--surface);border-bottom:1px solid var(--border);padding:.875rem 1rem;display:flex;align-items:center;justify-content:space-between;box-shadow:var(--shadow-s)}
+  .logo{display:flex;align-items:center;gap:.5rem;font-size:1.1rem;font-weight:700;color:var(--primary)}
+  .theme-btn{width:2.5rem;height:2.5rem;border-radius:var(--r-f);display:flex;align-items:center;justify-content:center;color:var(--muted);transition:background var(--t)}
+  .theme-btn:hover{background:var(--border);color:var(--text)}
+  .main{padding:1rem;max-width:480px;margin:0 auto;padding-bottom:5rem}
+  .section-label{font-size:.75rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:.5rem;margin-top:1.25rem}
+  .card{background:var(--surface);border-radius:var(--r-l);border:1px solid var(--border);padding:1rem;box-shadow:var(--shadow-s)}
+  .field-row{display:flex;flex-direction:column;gap:.375rem;margin-bottom:.75rem}
+  .field-label{font-size:.8125rem;font-weight:500;color:var(--muted)}
+  .field-input{background:var(--bg);border:1px solid var(--border);border-radius:var(--r-m);padding:.625rem .75rem;font-size:1rem;width:100%;transition:border-color var(--t),box-shadow var(--t);-webkit-appearance:none;appearance:none}
+  .field-input:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px rgba(1,105,111,.15)}
+  .search-btn{background:var(--primary);color:#fff;border-radius:var(--r-m);padding:.625rem 1rem;font-size:.9375rem;font-weight:600;width:100%;margin-top:.75rem;transition:background var(--t),transform var(--t);box-shadow:var(--shadow-s)}
+  .search-btn:hover{background:var(--primary-h)}
+  .search-btn:active{transform:scale(.98)}
+  .search-btn:disabled{opacity:.55;pointer-events:none}
+  .stop-list{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-l);overflow:hidden;margin-top:.5rem}
+  .stop-item{display:flex;align-items:center;padding:.75rem 1rem;border-bottom:1px solid var(--border);cursor:pointer;transition:background var(--t);gap:.75rem}
+  .stop-item:last-child{border-bottom:none}
+  .stop-item:hover{background:var(--surface2)}
+  .stop-item:active,.stop-item.selected{background:var(--primary-l)}
+  .stop-seq{font-size:.75rem;font-weight:700;color:var(--faint);width:1.5rem;flex-shrink:0;text-align:center}
+  .stop-info{flex:1;min-width:0}
+  .stop-name{font-size:.9375rem;font-weight:600}
+  .stop-sub{font-size:.75rem;color:var(--muted)}
+  .stop-chk{color:var(--primary);flex-shrink:0;display:none}
+  .stop-item.selected .stop-chk{display:block}
+  .eta-card{background:var(--surface);border-radius:var(--r-l);border:1px solid var(--border);box-shadow:var(--shadow-m);overflow:hidden}
+  .eta-head{background:var(--primary);color:#fff;padding:.875rem 1rem;display:flex;align-items:center;justify-content:space-between;gap:.5rem}
+  .eta-head.mtr{background:var(--mtr)}
+  .eta-badge{font-size:1.5rem;font-weight:700;line-height:1}
+  .eta-dest{font-size:.8125rem;opacity:.88}
+  .eta-sname{font-size:.9rem;font-weight:600;margin-top:.25rem;opacity:.9}
+  .ref-btn{width:2.25rem;height:2.25rem;border-radius:var(--r-f);background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;color:#fff;flex-shrink:0;transition:background var(--t)}
+  .ref-btn:hover{background:rgba(255,255,255,.25)}
+  .ref-btn.spin svg{animation:spin .7s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .eta-rows{padding:.25rem 0}
+  .eta-row{display:flex;align-items:center;padding:.875rem 1rem;border-bottom:1px solid var(--border);gap:.75rem}
+  .eta-row:last-child{border-bottom:none}
+  .eta-idx{width:1.5rem;height:1.5rem;border-radius:var(--r-f);background:var(--border);display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;color:var(--muted);flex-shrink:0}
+  .eta-tb{flex:1}
+  .eta-hm{font-size:1.05rem;font-weight:700}
+  .eta-rmk{font-size:.75rem;color:var(--muted)}
+  .eta-min{font-size:1.05rem;font-weight:700;text-align:right}
+  .eta-min.arriving{color:var(--warn)}.eta-min.soon{color:var(--orange)}.eta-min.normal{color:var(--success)}.eta-min.gone{color:var(--err)}
+  .eta-lbl{font-size:.7rem;color:var(--muted);text-align:right}
+  .status-box{text-align:center;padding:2.5rem 1.5rem;color:var(--muted)}
+  .status-box h3{font-size:1rem;font-weight:600;color:var(--text);margin-bottom:.375rem}
+  .status-box p{font-size:.875rem}
+  .upd{font-size:.75rem;color:var(--faint);text-align:center;padding:.75rem 1rem;border-top:1px solid var(--border)}
+  .fav-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:.5rem;margin-top:1.25rem}
+  .fav-list{display:flex;flex-direction:column;gap:.5rem}
+  .fav-item{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-m);padding:.75rem 1rem;display:flex;align-items:center;gap:.75rem;box-shadow:var(--shadow-s)}
+  .fav-info-wrap{flex:1;min-width:0;cursor:pointer}
+  .fav-pill{background:var(--primary);color:#fff;border-radius:var(--r-s);padding:.25rem .5rem;font-size:.875rem;font-weight:700;flex-shrink:0;min-width:2.75rem;text-align:center;cursor:pointer}
+  .fav-pill.mtr{background:var(--mtr)}
+  .fav-sname{font-size:.9375rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .fav-dest{font-size:.75rem;color:var(--muted)}
+  .fav-del{width:2rem;height:2rem;border-radius:var(--r-f);display:flex;align-items:center;justify-content:center;color:var(--faint);flex-shrink:0;transition:background var(--t),color var(--t)}
+  .fav-del:hover{background:var(--border);color:var(--err)}
+  .save-btn{background:none;border:1px solid var(--border);border-radius:var(--r-m);padding:.5rem .875rem;font-size:.8125rem;color:var(--muted);display:flex;align-items:center;gap:.375rem;transition:all var(--t);margin-top:.75rem;width:100%;justify-content:center}
+  .save-btn:hover{border-color:var(--primary);color:var(--primary);background:var(--primary-l)}
+  .hint{font-size:.72rem;color:var(--faint);text-align:center;margin-top:.4rem}
+  .toast{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%) translateY(100px);background:var(--text);color:var(--bg);padding:.625rem 1.25rem;border-radius:var(--r-f);font-size:.875rem;font-weight:500;z-index:200;transition:transform 300ms cubic-bezier(.16,1,.3,1),opacity 300ms;opacity:0;white-space:nowrap;box-shadow:var(--shadow-m)}
+  .toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+  .mtr-note{font-size:.78rem;color:var(--muted);background:var(--surface2);border-radius:var(--r-m);padding:.5rem .75rem;margin-top:.5rem;border:1px solid var(--border)}
 </style>
 </head>
 <body>
-
 <header class="header">
-  <div class="header-logo">
+  <div class="logo">
     <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
-      <rect x="2" y="6" width="22" height="14" rx="3" fill="var(--color-primary)" opacity="0.15"/>
-      <rect x="2" y="6" width="22" height="14" rx="3" stroke="var(--color-primary)" stroke-width="1.75"/>
-      <rect x="5" y="9" width="5" height="4" rx="1" fill="var(--color-primary)"/>
-      <rect x="11" y="9" width="5" height="4" rx="1" fill="var(--color-primary)"/>
-      <rect x="17" y="9" width="4" height="4" rx="1" fill="var(--color-primary)"/>
-      <circle cx="7" cy="21" r="2" fill="var(--color-primary)"/>
-      <circle cx="19" cy="21" r="2" fill="var(--color-primary)"/>
+      <rect x="2" y="6" width="22" height="14" rx="3" fill="var(--primary)" opacity=".15"/>
+      <rect x="2" y="6" width="22" height="14" rx="3" stroke="var(--primary)" stroke-width="1.75"/>
+      <rect x="5" y="9" width="5" height="4" rx="1" fill="var(--primary)"/>
+      <rect x="11" y="9" width="5" height="4" rx="1" fill="var(--primary)"/>
+      <rect x="17" y="9" width="4" height="4" rx="1" fill="var(--primary)"/>
+      <circle cx="7" cy="21" r="2" fill="var(--primary)"/>
+      <circle cx="19" cy="21" r="2" fill="var(--primary)"/>
     </svg>
     巴士ETA
   </div>
   <button class="theme-btn" data-theme-toggle aria-label="切換深色模式">
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-    </svg>
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
   </button>
 </header>
 
 <main class="main">
-
   <div id="favSection">
-    <div class="fav-header">
-      <div class="section-label" style="margin:0">常用路線</div>
-    </div>
+    <div class="fav-hd"><div class="section-label" style="margin:0">常用路線</div></div>
     <div class="fav-list" id="favList">
-      <div class="status-box" style="padding:1.25rem">
-        <p>未有常用路線，搜尋後可儲存</p>
-      </div>
+      <div class="status-box" style="padding:1.25rem"><p>未有常用路線，搜尋後可儲存</p></div>
     </div>
   </div>
 
   <div class="section-label">搜尋路線</div>
-  <div class="search-card">
+  <div class="card">
     <div class="field-row">
       <div class="field-label">巴士公司</div>
-      <select class="field-input" id="companySelect">
+      <select class="field-input" id="companySelect" onchange="onCoChange()">
         <option value="KMB">九巴 / 龍運 (KMB/LWB)</option>
         <option value="CTB">城巴 (CTB)</option>
         <option value="MTR">港鐵巴士 (MTR Bus)</option>
@@ -359,18 +138,17 @@
     </div>
     <div class="field-row">
       <div class="field-label">路線號碼</div>
-      <input class="field-input" type="text" id="routeInput" placeholder="例如 K53、268C、E34A" autocomplete="off" autocapitalize="characters" spellcheck="false">
+      <input class="field-input" type="text" id="routeInput" placeholder="例如 K53、K53S、268C、E34A" autocomplete="off" autocapitalize="characters" spellcheck="false">
     </div>
-    <div class="field-row">
+    <div class="field-row" id="dirRow">
       <div class="field-label">方向</div>
       <select class="field-input" id="dirSelect">
         <option value="outbound">去程 (outbound)</option>
         <option value="inbound">回程 (inbound)</option>
       </select>
     </div>
-    <button class="search-btn" id="searchBtn" onclick="searchRoute()">
-      搜尋站點
-    </button>
+    <div id="mtrNote" class="mtr-note" style="display:none">💡 港鐵巴士循環綫（如 K53、K53S）選去程即可</div>
+    <button class="search-btn" id="searchBtn" onclick="doSearch()">搜尋站點</button>
   </div>
 
   <div id="stopSection" style="display:none">
@@ -380,513 +158,331 @@
 
   <div id="etaSection" style="display:none">
     <div class="section-label">到站時間</div>
-    <div class="eta-card" id="etaCard">
-      <div class="eta-card-header" id="etaCardHeader">
+    <div class="eta-card">
+      <div class="eta-head" id="etaHead">
         <div>
-          <div class="eta-route-badge" id="etaRouteBadge"></div>
+          <div class="eta-badge" id="etaBadge"></div>
           <div class="eta-dest" id="etaDest"></div>
-          <div class="eta-stop-name" id="etaStopName" style="margin-top:0.25rem;opacity:0.9"></div>
+          <div class="eta-sname" id="etaSname"></div>
         </div>
-        <button class="refresh-btn" id="refreshBtn" onclick="refreshETA()" aria-label="重新整理">
-          <svg id="refreshIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <button class="ref-btn" id="refBtn" onclick="doRefresh()" aria-label="重新整理">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
             <polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/>
             <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
           </svg>
         </button>
       </div>
       <div class="eta-rows" id="etaRows"></div>
-      <div class="updated-at" id="updatedAt"></div>
+      <div class="upd" id="upd"></div>
     </div>
-    <button class="save-fav-btn" id="saveFavBtn" onclick="saveFav()">
+    <button class="save-btn" onclick="saveFav()">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
       儲存為常用路線
     </button>
-    <div class="fav-save-hint">常用路線會以書籤網址儲存，書籤後即可保留</div>
+    <div class="hint">💾 儲存後請將網址加入 Safari 書籤，以保留常用路線</div>
   </div>
-
 </main>
 
 <div class="toast" id="toast"></div>
 
 <script>
-// ---- STATE ----
-let state = {
-  company: 'KMB', route: '', direction: 'outbound',
-  stopSeq: null, stopId: null, stopName: '', stopNameEn: '', destName: '',
-  routeStops: [], favs: []
-};
+// ── State ──
+let S = {company:'KMB',route:'',dir:'outbound',stopSeq:null,stopId:null,stopCode:null,stopName:'',destName:''};
+let favs = loadFavs();
 
-// ---- FAVOURITES: stored in URL hash so they survive refresh ----
-// Format: #favs=base64(JSON)
-function saveFavsToHash(favs) {
-  try {
-    const encoded = btoa(unescape(encodeURIComponent(JSON.stringify(favs))));
-    history.replaceState(null, '', '#favs=' + encoded);
-  } catch(e) {}
-}
-
-function loadFavsFromHash() {
-  try {
-    const hash = location.hash;
-    const match = hash.match(/^#favs=(.+)$/);
-    if (match) {
-      return JSON.parse(decodeURIComponent(escape(atob(match[1]))));
-    }
-  } catch(e) {}
+// ── Favs via URL hash ──
+function loadFavs(){
+  try{const m=location.hash.match(/^#favs=(.+)$/);if(m)return JSON.parse(decodeURIComponent(escape(atob(m[1]))))}catch(e){}
   return [];
 }
+function saveFavsToHash(){
+  try{history.replaceState(null,'','#favs='+btoa(unescape(encodeURIComponent(JSON.stringify(favs)))))}catch(e){}
+}
 
-let inMemoryFavs = loadFavsFromHash();
-
-// ---- THEME ----
+// ── Theme ──
 (function(){
-  const html = document.documentElement;
-  const btn = document.querySelector('[data-theme-toggle]');
-  let dark = window.matchMedia('(prefers-color-scheme:dark)').matches;
-  html.setAttribute('data-theme', dark ? 'dark' : 'light');
-  updateThemeIcon();
-  btn.addEventListener('click', () => {
-    dark = !dark;
-    html.setAttribute('data-theme', dark ? 'dark' : 'light');
-    updateThemeIcon();
-  });
-  function updateThemeIcon(){
-    btn.innerHTML = dark
-      ? '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>'
-      : '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
-  }
+  const html=document.documentElement,btn=document.querySelector('[data-theme-toggle]');
+  let dark=window.matchMedia('(prefers-color-scheme:dark)').matches;
+  html.setAttribute('data-theme',dark?'dark':'light');
+  function icon(){btn.innerHTML=dark
+    ?'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>'
+    :'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';}
+  icon();
+  btn.addEventListener('click',()=>{dark=!dark;html.setAttribute('data-theme',dark?'dark':'light');icon();});
 })();
 
-// ---- TOAST ----
-function showToast(msg, ms=2200){
-  const el = document.getElementById('toast');
-  el.textContent = msg;
-  el.classList.add('show');
-  setTimeout(()=>el.classList.remove('show'), ms);
-}
+function toast(msg,ms=2400){const e=document.getElementById('toast');e.textContent=msg;e.classList.add('show');setTimeout(()=>e.classList.remove('show'),ms);}
+function fj(url){return fetch(url).then(r=>{if(!r.ok)throw new Error(r.status);return r.json()});}
+function onCoChange(){document.getElementById('mtrNote').style.display=document.getElementById('companySelect').value==='MTR'?'block':'none';}
 
-// ---- API HELPERS ----
-// MTR Bus uses opendata.mtr.com.hk
-const MTR_ROUTE_STOPS_URL = 'https://opendata.mtr.com.hk/data/mtr_bus_stops.csv';
-
-const API = {
-  KMB: {
-    routeStops: (route, dir) => `https://data.etabus.gov.hk/v1/transport/kmb/route-stop/${route}/${dir}/1`,
-    stopInfo:   (stopId)     => `https://data.etabus.gov.hk/v1/transport/kmb/stop/${stopId}`,
-    eta:        (stopId)     => `https://data.etabus.gov.hk/v1/transport/kmb/stop-eta/${stopId}`,
-    routeInfo:  (route, dir) => `https://data.etabus.gov.hk/v1/transport/kmb/route/${route}/${dir}/1`,
-  },
-  CTB: {
-    routeStops: (route, dir) => `https://rt.data.gov.hk/v2/transport/citybus/route-stop/CTB/${route}/${dir}`,
-    stopInfo:   (stopId)     => `https://rt.data.gov.hk/v2/transport/citybus/stop/${stopId}`,
-    eta:        (stopId, route) => `https://rt.data.gov.hk/v2/transport/citybus/eta/CTB/${stopId}/${route}`,
-    routeInfo:  (route)      => `https://rt.data.gov.hk/v2/transport/citybus/route/CTB/${route}`,
-  },
-  MTR: {
-    eta:        (route, stopCode, dir) => `https://rt.data.gov.hk/v1/transport/mtr/bus/getSchedule`,
-  }
-};
-
-async function fetchJSON(url){
-  const res = await fetch(url);
-  if (!res.ok) throw new Error('HTTP '+res.status);
-  return res.json();
-}
-
-// Parse MTR Bus CSV stop data
-let mtrBusStopsCache = null;
-async function getMtrBusStops(route, dir) {
-  // Use data.gov.hk MTR Bus route stops API
-  const apiDir = dir === 'outbound' ? 'O' : 'I';
-  const url = `https://rt.data.gov.hk/v1/transport/mtr/bus/getSchedule`;
-  // First get stops from static CSV via data.gov.hk
-  // MTR Bus uses a different API: route-stop list via opendata
-  const stopsUrl = `https://rt.data.gov.hk/v1/transport/mtr/bus/getSchedule`;
-
-  // Actually use the correct MTR Bus stop list endpoint
-  const listUrl = `https://opendata.mtr.com.hk/data/mtr_bus_stops.csv`;
-
-  if (!mtrBusStopsCache) {
-    try {
-      const res = await fetch(listUrl);
-      const text = await res.text();
-      mtrBusStopsCache = parseMtrCsv(text);
-    } catch(e) {
-      mtrBusStopsCache = {};
+// ── MTR CSV: correct column order ──
+// ROUTE,DIRECTION,STOP_SEQ,BSI_ID,LAT,LONG,中文名,英文名,ROUTE_ALIAS
+//   0       1        2       3     4    5    6       7       8
+let mtrCSV = null;
+async function getMtrCSV(){
+  if(mtrCSV) return mtrCSV;
+  try{
+    const r = await fetch('https://opendata.mtr.com.hk/data/mtr_bus_stops.csv');
+    const t = await r.text();
+    const lines = t.trim().split('\n');
+    const res = {};
+    for(let i=1;i<lines.length;i++){
+      const c = lines[i].split(',');
+      if(c.length < 7) continue;
+      const route  = c[0].trim().toUpperCase();
+      const dir    = c[1].trim().toUpperCase();   // O or I
+      const seq    = parseInt(c[2]);
+      const code   = c[3].trim();                 // BSI_ID e.g. K53-U010
+      // c[4]=LAT, c[5]=LONG
+      const nameTc = c[6].trim();
+      const nameEn = c[7] ? c[7].trim() : '';
+      if(!route) continue;
+      if(!res[route]) res[route]=[];
+      res[route].push({dir,seq,code,nameTc,nameEn});
     }
-  }
-
-  const key = route.toUpperCase();
-  const dirKey = apiDir;
-  const stops = (mtrBusStopsCache[key] || []).filter(s => s.dir === dirKey);
-  return stops;
+    mtrCSV = res;
+  }catch(e){ mtrCSV = {}; }
+  return mtrCSV;
 }
 
-function parseMtrCsv(text) {
-  const lines = text.trim().split('\n');
-  const result = {};
-  // Skip header
-  for (let i = 1; i < lines.length; i++) {
-    const cols = lines[i].split(',');
-    if (cols.length < 7) continue;
-    const route = (cols[0]||'').trim().toUpperCase();
-    const dir   = (cols[1]||'').trim().toUpperCase(); // O or I
-    const seq   = parseInt(cols[2]||'0');
-    const stopCode = (cols[3]||'').trim();
-    const nameTc = (cols[5]||'').trim();
-    const nameEn = (cols[4]||'').trim();
-    if (!route) continue;
-    if (!result[route]) result[route] = [];
-    result[route].push({ dir, seq, stopCode, nameTc, nameEn });
-  }
-  return result;
-}
-
-// ---- SEARCH ----
-async function searchRoute(){
+// ── Search ──
+async function doSearch(){
   const company = document.getElementById('companySelect').value;
-  const route = document.getElementById('routeInput').value.trim().toUpperCase();
-  const dir = document.getElementById('dirSelect').value;
-  if (!route){ showToast('請輸入路線號碼'); return; }
-
-  state.company = company; state.route = route; state.direction = dir;
-
-  const btn = document.getElementById('searchBtn');
-  btn.textContent = '搜尋中…'; btn.disabled = true;
-  document.getElementById('stopSection').style.display = 'none';
-  document.getElementById('etaSection').style.display = 'none';
-
-  try {
-    if (company === 'MTR') {
-      await searchMtrRoute(route, dir);
-    } else {
-      await searchBusRoute(company, route, dir);
-    }
-  } catch(e) {
-    showToast('搜尋失敗，請確認路線號碼');
-    console.error(e);
-  }
-  btn.textContent = '搜尋站點'; btn.disabled = false;
+  const route   = document.getElementById('routeInput').value.trim().toUpperCase();
+  const dir     = document.getElementById('dirSelect').value;
+  if(!route){toast('請輸入路線號碼');return;}
+  S.company=company; S.route=route; S.dir=dir;
+  const btn=document.getElementById('searchBtn');
+  btn.textContent='搜尋中…'; btn.disabled=true;
+  document.getElementById('stopSection').style.display='none';
+  document.getElementById('etaSection').style.display='none';
+  try{
+    company==='MTR' ? await searchMTR(route,dir) : await searchBus(company,route,dir);
+  }catch(e){toast('搜尋失敗，請確認路線號碼');console.error(e);}
+  btn.textContent='搜尋站點'; btn.disabled=false;
 }
 
-async function searchBusRoute(company, route, dir) {
-  const rsData = await fetchJSON(API[company].routeStops(route, dir));
-  const stops = rsData.data;
-  if (!stops || stops.length === 0){ showToast('找不到此路線/方向，請檢查'); return; }
-
-  let destName = '';
-  try {
-    const rdData = await fetchJSON(API[company].routeInfo(route, dir));
-    const rd = rdData.data;
-    if (rd) destName = rd.dest_tc || rd.dest_en || '';
-  } catch(e){}
-  state.destName = destName;
-  state.routeStops = stops;
-
-  const toFetch = stops.slice(0, 50);
-  const stopDetails = await Promise.all(
-    toFetch.map(s => fetchJSON(API[company].stopInfo(s.stop)).catch(()=>null))
-  );
-  renderStopList(stops, stopDetails, company);
-  document.getElementById('stopSection').style.display = 'block';
-  document.getElementById('stopSection').scrollIntoView({behavior:'smooth', block:'start'});
+// KMB / CTB
+async function searchBus(co,route,dir){
+  const rs = co==='KMB'
+    ? await fj(`https://data.etabus.gov.hk/v1/transport/kmb/route-stop/${route}/${dir}/1`)
+    : await fj(`https://rt.data.gov.hk/v2/transport/citybus/route-stop/CTB/${route}/${dir}`);
+  const stops = rs.data;
+  if(!stops||!stops.length){toast('找不到此路線/方向，請確認');return;}
+  let dest='';
+  try{
+    const ri = co==='KMB'
+      ? await fj(`https://data.etabus.gov.hk/v1/transport/kmb/route/${route}/${dir}/1`)
+      : await fj(`https://rt.data.gov.hk/v2/transport/citybus/route/CTB/${route}`);
+    dest = ri.data?.dest_tc || ri.data?.dest_en || '';
+  }catch(e){}
+  S.destName=dest;
+  const details = await Promise.all(stops.slice(0,60).map(s=>{
+    const url = co==='KMB'
+      ? `https://data.etabus.gov.hk/v1/transport/kmb/stop/${s.stop}`
+      : `https://rt.data.gov.hk/v2/transport/citybus/stop/${s.stop}`;
+    return fj(url).catch(()=>null);
+  }));
+  const list=document.getElementById('stopList');
+  list.innerHTML='';
+  stops.forEach((s,i)=>{
+    const d=details[i]?.data;
+    const tc=d?(d.name_tc||d.name_en||'站'+(i+1)):'站'+(i+1);
+    const en=d?(d.name_en||''):'';
+    addStop(list,parseInt(s.seq||i+1),s.stop,null,tc,en);
+  });
+  show('stopSection');
 }
 
-async function searchMtrRoute(route, dir) {
-  const stops = await getMtrBusStops(route, dir);
-  if (!stops || stops.length === 0){
-    showToast('找不到港鐵巴士此路線，請確認路線號碼及方向');
+// MTR Bus — CSV first, then ETA-API fallback
+async function searchMTR(route,dir){
+  const csv = await getMtrCSV();
+  const apiDir = dir==='outbound'?'O':'I';
+  let stops = (csv[route]||[]).filter(s=>s.dir===apiDir);
+  // Circular routes may only have O; try without dir filter if empty
+  if(!stops.length) stops = csv[route]||[];
+  stops = stops.sort((a,b)=>a.seq-b.seq);
+
+  if(stops.length){
+    S.destName='';
+    const list=document.getElementById('stopList');
+    list.innerHTML='';
+    stops.forEach(s=>addStop(list,s.seq,null,s.code,s.nameTc||s.nameEn,s.nameEn));
+    show('stopSection');
     return;
   }
-  state.destName = '';
-  state.routeStops = stops;
-  renderMtrStopList(stops);
-  document.getElementById('stopSection').style.display = 'block';
-  document.getElementById('stopSection').scrollIntoView({behavior:'smooth', block:'start'});
-}
 
-function renderMtrStopList(stops) {
-  const list = document.getElementById('stopList');
-  list.innerHTML = '';
-  stops.forEach((s, i) => {
-    const div = document.createElement('div');
-    div.className = 'stop-item';
-    div.dataset.seq = s.seq;
-    div.dataset.stopId = s.stopCode;
-    div.dataset.nameTc = s.nameTc;
-    div.dataset.nameEn = s.nameEn;
-    div.innerHTML = `
-      <span class="stop-seq">${s.seq}</span>
-      <div class="stop-info">
-        <div class="stop-name">${s.nameTc || s.nameEn}</div>
-        ${s.nameEn ? `<div class="stop-name-en">${s.nameEn}</div>` : ''}
-      </div>
-      <svg class="stop-check" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-    `;
-    div.addEventListener('click', ()=>selectStop(div, s.seq, s.stopCode, s.nameTc||s.nameEn, s.nameEn));
-    list.appendChild(div);
+  // Fallback: discover stops from ETA API response
+  toast('從港鐵巴士系統直接搜尋 '+route+'…');
+  const res = await fetch('https://rt.data.gov.hk/v1/transport/mtr/bus/getSchedule',{
+    method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({language:'zh',routeName:route})
   });
+  const data = await res.json();
+  const busStops = data.busStop||[];
+  if(!busStops.length){toast('找不到 '+route+' 的站點。請確認路線號碼是否正確');return;}
+  S.destName='';
+  const list=document.getElementById('stopList');
+  list.innerHTML='';
+  busStops.forEach((bs,i)=>addStop(list,i+1,null,bs.busStopId,bs.busStopId,''));
+  show('stopSection');
 }
 
-function renderStopList(stops, stopDetails, company){
-  const list = document.getElementById('stopList');
-  list.innerHTML = '';
-  stops.forEach((s, i) => {
-    const detail = stopDetails[i]?.data;
-    const nameTc = detail ? (detail.name_tc||detail.name_en||'站 '+(i+1)) : '載入中…';
-    const nameEn = detail ? (detail.name_en||'') : '';
-    const seq = parseInt(s.seq||i+1);
-    const div = document.createElement('div');
-    div.className = 'stop-item';
-    div.dataset.seq = seq;
-    div.dataset.stopId = s.stop;
-    div.dataset.nameTc = nameTc;
-    div.dataset.nameEn = nameEn;
-    div.innerHTML = `
-      <span class="stop-seq">${seq}</span>
-      <div class="stop-info">
-        <div class="stop-name">${nameTc}</div>
-        ${nameEn ? `<div class="stop-name-en">${nameEn}</div>` : ''}
-      </div>
-      <svg class="stop-check" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-    `;
-    div.addEventListener('click', ()=>selectStop(div, seq, s.stop, nameTc, nameEn));
-    list.appendChild(div);
-  });
+function addStop(list,seq,stopId,stopCode,tc,en){
+  const div=document.createElement('div');
+  div.className='stop-item';
+  div.innerHTML=`<span class="stop-seq">${seq}</span><div class="stop-info"><div class="stop-name">${tc}</div>${en&&en!==tc?`<div class="stop-sub">${en}</div>`:''}</div><svg class="stop-chk" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>`;
+  div.addEventListener('click',()=>pickStop(div,seq,stopId,stopCode,tc));
+  list.appendChild(div);
 }
 
-async function selectStop(el, seq, stopId, nameTc, nameEn){
+async function pickStop(el,seq,stopId,stopCode,tc){
   document.querySelectorAll('.stop-item').forEach(i=>i.classList.remove('selected'));
   el.classList.add('selected');
-  state.stopSeq = seq; state.stopId = stopId;
-  state.stopName = nameTc; state.stopNameEn = nameEn;
-
-  const isMtr = state.company === 'MTR';
-  document.getElementById('etaSection').style.display = 'block';
-  document.getElementById('etaRouteBadge').textContent = state.route;
-  document.getElementById('etaDest').textContent = '往 ' + (state.destName || '終點站');
-  document.getElementById('etaStopName').textContent = nameTc;
-  const header = document.getElementById('etaCardHeader');
-  if (isMtr) header.classList.add('mtr-header');
-  else header.classList.remove('mtr-header');
-  document.getElementById('etaSection').scrollIntoView({behavior:'smooth', block:'start'});
+  S.stopSeq=seq; S.stopId=stopId; S.stopCode=stopCode; S.stopName=tc;
+  const isMtr=S.company==='MTR';
+  document.getElementById('etaBadge').textContent=S.route;
+  document.getElementById('etaDest').textContent='往 '+(S.destName||'終點站');
+  document.getElementById('etaSname').textContent=tc;
+  isMtr ? document.getElementById('etaHead').classList.add('mtr')
+        : document.getElementById('etaHead').classList.remove('mtr');
+  show('etaSection');
   await loadETA();
 }
 
-// ---- ETA ----
+// ── ETA ──
 async function loadETA(){
-  const rows = document.getElementById('etaRows');
-  rows.innerHTML = `<div class="status-box"><p>載入中…</p></div>`;
-  document.getElementById('updatedAt').textContent = '';
-  const btn = document.getElementById('refreshBtn');
-  btn.classList.add('spinning');
-  try {
-    if (state.company === 'MTR') {
-      await loadMtrETA();
-    } else {
-      const url = state.company === 'KMB'
-        ? API.KMB.eta(state.stopId)
-        : API.CTB.eta(state.stopId, state.route);
-      const data = await fetchJSON(url);
-      const etas = (data.data||[]).filter(e => {
-        if (state.company==='KMB') return e.route===state.route && parseInt(e.seq)===state.stopSeq;
-        return e.route===state.route;
-      });
-      renderETA(etas);
-    }
-  } catch(e){
-    rows.innerHTML = `<div class="status-box"><p>無法取得資料，請稍後再試</p></div>`;
-    console.error(e);
-  }
-  btn.classList.remove('spinning');
-  document.getElementById('updatedAt').textContent = '更新時間：' + new Date().toLocaleTimeString('zh-HK');
+  document.getElementById('etaRows').innerHTML='<div class="status-box"><p>載入中…</p></div>';
+  document.getElementById('upd').textContent='';
+  document.getElementById('refBtn').classList.add('spin');
+  try{
+    S.company==='MTR' ? await mtrETA() : await busETA();
+  }catch(e){document.getElementById('etaRows').innerHTML='<div class="status-box"><p>無法取得資料，請稍後再試</p></div>';console.error(e);}
+  document.getElementById('refBtn').classList.remove('spin');
+  document.getElementById('upd').textContent='更新時間：'+new Date().toLocaleTimeString('zh-HK');
 }
+function doRefresh(){if(S.stopId||S.stopCode) loadETA();}
 
-async function loadMtrETA(){
-  const rows = document.getElementById('etaRows');
-  // MTR Bus ETA API
-  const url = `https://rt.data.gov.hk/v1/transport/mtr/bus/getSchedule`;
-  const body = {
-    language: 'zh',
-    routeName: state.route.toUpperCase()
-  };
-  try {
-    const res = await fetch(url, {
-      method: 'POST',
-      headers: {'Content-Type':'application/json'},
-      body: JSON.stringify(body)
-    });
-    const data = await res.json();
-    // Find matching stop
-    const busStop = (data.busStop || []).find(s =>
-      s.busStopId && s.busStopId.toUpperCase() === state.stopId.toUpperCase()
-    );
-    if (!busStop || !busStop.bus || busStop.bus.length === 0) {
-      rows.innerHTML = `<div class="status-box">
-        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-        <h3>暫無班次資料</h3><p>此時段可能沒有服務</p></div>`;
-      return;
-    }
-    renderMtrETA(busStop.bus);
-  } catch(e) {
-    rows.innerHTML = `<div class="status-box"><p>港鐵巴士資料暫時無法取得</p></div>`;
-    console.error(e);
+async function mtrETA(){
+  const res=await fetch('https://rt.data.gov.hk/v1/transport/mtr/bus/getSchedule',{
+    method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({language:'zh',routeName:S.route})
+  });
+  const data=await res.json();
+  const targetId=(S.stopCode||S.stopId||'').toUpperCase();
+  const busStop=(data.busStop||[]).find(bs=>bs.busStopId&&bs.busStopId.toUpperCase()===targetId);
+  if(!busStop||!busStop.bus||!busStop.bus.length){
+    noETA(); return;
   }
-}
-
-function renderMtrETA(buses){
-  const rows = document.getElementById('etaRows');
-  const now = new Date();
-  rows.innerHTML = '';
-  buses.slice(0,3).forEach((b, i) => {
-    // MTR returns arrivalTimeInSecond or departureTimeInSecond
-    const secs = parseInt(b.arrivalTimeInSecond || b.departureTimeInSecond || '0');
-    let minsText = '—', minsClass = 'normal', hmText = '—';
-    if (!isNaN(secs) && secs >= 0) {
-      const etaTime = new Date(now.getTime() + secs * 1000);
-      hmText = etaTime.toLocaleTimeString('zh-HK', {hour:'2-digit', minute:'2-digit'});
-      const diffMin = Math.round(secs / 60);
-      if (diffMin < 0) { minsText = '已過'; minsClass = 'gone'; }
-      else if (diffMin === 0) { minsText = '即將'; minsClass = 'arriving'; }
-      else if (diffMin <= 3) { minsText = diffMin + ' 分'; minsClass = 'arriving'; }
-      else if (diffMin <= 8) { minsText = diffMin + ' 分'; minsClass = 'soon'; }
-      else { minsText = diffMin + ' 分'; minsClass = 'normal'; }
+  const now=new Date(), rows=document.getElementById('etaRows');
+  rows.innerHTML='';
+  busStop.bus.slice(0,3).forEach((b,i)=>{
+    // Use arrivalTimeText directly from API if arrival seconds is huge (108000 = no data)
+    const arrSec=parseInt(b.arrivalTimeInSecond??'-1');
+    const depSec=parseInt(b.departureTimeInSecond??'-1');
+    // K53S returns 108000 for arrival (circular start), use departure instead
+    const useSec = (arrSec>=0 && arrSec<86400) ? arrSec : (depSec>=0 && depSec<86400 ? depSec : -1);
+    let hm='—',mins='—',cls='normal';
+    if(useSec>=0){
+      const t=new Date(now.getTime()+useSec*1000);
+      hm=t.toLocaleTimeString('zh-HK',{hour:'2-digit',minute:'2-digit'});
+      const m=Math.round(useSec/60);
+      if(m<=0){mins='即將';cls='arriving';}
+      else if(m<=3){mins=m+' 分';cls='arriving';}
+      else if(m<=8){mins=m+' 分';cls='soon';}
+      else{mins=m+' 分';cls='normal';}
+    } else if(b.arrivalTimeText&&b.arrivalTimeText!==''){
+      mins=b.arrivalTimeText; cls='normal';
+    } else if(b.departureTimeText&&b.departureTimeText!==''){
+      mins=b.departureTimeText; cls='normal';
     }
-    const remark = b.busLocation ? '' : '';
-    const row = document.createElement('div');
-    row.className = 'eta-row';
-    row.innerHTML = `
-      <div class="eta-index">${i+1}</div>
-      <div class="eta-time-block">
-        <div class="eta-time-hm">${hmText}</div>
-        ${remark ? `<div class="eta-remark">${remark}</div>` : ''}
-      </div>
-      <div>
-        <div class="eta-mins ${minsClass}">${minsText}</div>
-        ${(minsText !== '—' && minsText !== '已過' && minsText !== '即將') ? '<div class="eta-mins-label">後到站</div>' : ''}
-      </div>
-    `;
-    rows.appendChild(row);
+    rows.appendChild(mkRow(i+1,hm,mins,cls,''));
   });
 }
 
-function refreshETA(){
-  if (state.stopId) loadETA();
-}
-
-function renderETA(etas){
-  const rows = document.getElementById('etaRows');
-  if (!etas || etas.length === 0){
-    rows.innerHTML = `<div class="status-box">
-      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-      <h3>暫無班次資料</h3><p>此時段可能沒有服務，或服務已結束</p>
-    </div>`;
-    return;
+async function busETA(){
+  let etas;
+  if(S.company==='KMB'){
+    const d=await fj(`https://data.etabus.gov.hk/v1/transport/kmb/stop-eta/${S.stopId}`);
+    etas=(d.data||[]).filter(e=>e.route===S.route&&parseInt(e.seq)===S.stopSeq);
+  }else{
+    const d=await fj(`https://rt.data.gov.hk/v2/transport/citybus/eta/CTB/${S.stopId}/${S.route}`);
+    etas=(d.data||[]).filter(e=>e.route===S.route);
   }
-  const now = new Date();
-  rows.innerHTML = '';
-  etas.slice(0,3).forEach((e, i) => {
-    const etaTime = e.eta ? new Date(e.eta) : null;
-    let minsText = '—', minsClass = 'normal', hmText = '—';
-    if (etaTime) {
-      hmText = etaTime.toLocaleTimeString('zh-HK', {hour:'2-digit', minute:'2-digit'});
-      const diffMs = etaTime - now;
-      const diffMin = Math.round(diffMs / 60000);
-      if (diffMin < 0) { minsText = '已過'; minsClass = 'gone'; }
-      else if (diffMin === 0) { minsText = '即將'; minsClass = 'arriving'; }
-      else if (diffMin <= 3) { minsText = diffMin + ' 分'; minsClass = 'arriving'; }
-      else if (diffMin <= 8) { minsText = diffMin + ' 分'; minsClass = 'soon'; }
-      else { minsText = diffMin + ' 分'; minsClass = 'normal'; }
+  if(!etas||!etas.length){noETA();return;}
+  const now=new Date(),rows=document.getElementById('etaRows');
+  rows.innerHTML='';
+  etas.slice(0,3).forEach((e,i)=>{
+    const et=e.eta?new Date(e.eta):null;
+    let hm='—',mins='—',cls='normal';
+    if(et){
+      hm=et.toLocaleTimeString('zh-HK',{hour:'2-digit',minute:'2-digit'});
+      const m=Math.round((et-now)/60000);
+      if(m<0){mins='已過';cls='gone';}
+      else if(m===0){mins='即將';cls='arriving';}
+      else if(m<=3){mins=m+' 分';cls='arriving';}
+      else if(m<=8){mins=m+' 分';cls='soon';}
+      else{mins=m+' 分';cls='normal';}
     }
-    const remark = e.rmk_tc || e.rmk_en || '';
-    const row = document.createElement('div');
-    row.className = 'eta-row';
-    row.innerHTML = `
-      <div class="eta-index">${i+1}</div>
-      <div class="eta-time-block">
-        <div class="eta-time-hm">${hmText}</div>
-        ${remark ? `<div class="eta-remark">${remark}</div>` : ''}
-      </div>
-      <div>
-        <div class="eta-mins ${minsClass}">${minsText}</div>
-        ${(minsText !== '—' && minsText !== '已過' && minsText !== '即將') ? '<div class="eta-mins-label">後到站</div>' : ''}
-      </div>
-    `;
-    rows.appendChild(row);
+    rows.appendChild(mkRow(i+1,hm,mins,cls,e.rmk_tc||e.rmk_en||''));
   });
 }
 
-// ---- FAVOURITES ----
+function noETA(){
+  document.getElementById('etaRows').innerHTML='<div class="status-box"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><h3>暫無班次資料</h3><p>此時段可能沒有服務</p></div>';
+}
+
+function mkRow(idx,hm,mins,cls,rmk){
+  const d=document.createElement('div');
+  d.className='eta-row';
+  const showAfter=mins!=='—'&&mins!=='已過'&&mins!=='即將'&&!mins.includes('分鐘')&&!mins.includes('到站');
+  d.innerHTML=`<div class="eta-idx">${idx}</div><div class="eta-tb"><div class="eta-hm">${hm}</div>${rmk?`<div class="eta-rmk">${rmk}</div>`:''}</div><div><div class="eta-min ${cls}">${mins}</div>${showAfter?'<div class="eta-lbl">後到站</div>':''}</div>`;
+  return d;
+}
+
+function show(id){
+  document.getElementById(id).style.display='block';
+  document.getElementById(id).scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+// ── Favs ──
 function renderFavs(){
-  const list = document.getElementById('favList');
-  if (inMemoryFavs.length === 0){
-    list.innerHTML = `<div class="status-box" style="padding:1.25rem"><p>未有常用路線，搜尋後可儲存</p></div>`;
-    return;
-  }
-  list.innerHTML = '';
-  inMemoryFavs.forEach((fav, idx)=>{
-    const isMtr = fav.company === 'MTR';
-    const companyLabel = fav.company==='KMB'?'九巴': fav.company==='CTB'?'城巴':'港鐵巴士';
-    const item = document.createElement('div');
-    item.className = 'fav-item';
-    item.innerHTML = `
-      <div class="fav-route-pill ${isMtr?'mtr-pill':''}">${fav.route}</div>
-      <div class="fav-info">
-        <div class="fav-stop-name">${fav.stopName}</div>
-        <div class="fav-dest">往 ${fav.destName||'終點站'} · ${companyLabel} · ${fav.direction==='outbound'?'去程':'回程'}</div>
-      </div>
-      <button class="fav-del" onclick="delFav(event,${idx})" aria-label="刪除">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-      </button>
-    `;
-    item.querySelector('.fav-info').addEventListener('click', ()=>loadFav(fav));
+  const list=document.getElementById('favList');
+  if(!favs.length){list.innerHTML='<div class="status-box" style="padding:1.25rem"><p>未有常用路線，搜尋後可儲存</p></div>';return;}
+  list.innerHTML='';
+  favs.forEach((f,i)=>{
+    const isMtr=f.company==='MTR';
+    const co=f.company==='KMB'?'九巴':f.company==='CTB'?'城巴':'港鐵巴士';
+    const item=document.createElement('div');
+    item.className='fav-item';
+    item.innerHTML=`<div class="fav-pill ${isMtr?'mtr':''}" onclick="loadFav(${i})">${f.route}</div><div class="fav-info-wrap" onclick="loadFav(${i})"><div class="fav-sname">${f.stopName}</div><div class="fav-dest">往 ${f.destName||'終點站'} · ${co} · ${f.dir==='outbound'?'去程':'回程'}</div></div><button class="fav-del" onclick="delFav(event,${i})" aria-label="刪除"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>`;
     list.appendChild(item);
   });
 }
 
 function saveFav(){
-  if (!state.stopId){ showToast('請先選擇站點'); return; }
-  const exists = inMemoryFavs.some(f=>f.stopId===state.stopId && f.route===state.route && f.direction===state.direction);
-  if (exists){ showToast('已儲存過此站點'); return; }
-  inMemoryFavs.push({
-    company: state.company, route: state.route, direction: state.direction,
-    stopSeq: state.stopSeq, stopId: state.stopId,
-    stopName: state.stopName, destName: state.destName
-  });
-  saveFavsToHash(inMemoryFavs);
-  renderFavs();
-  showToast('✓ 已儲存！請將此頁書籤以保留常用路線');
+  if(!S.stopId&&!S.stopCode){toast('請先選擇站點');return;}
+  const key=S.stopCode||S.stopId;
+  if(favs.some(f=>(f.stopCode||f.stopId)===key&&f.route===S.route)){toast('已儲存過此站點');return;}
+  favs.push({company:S.company,route:S.route,dir:S.dir,stopSeq:S.stopSeq,stopId:S.stopId,stopCode:S.stopCode,stopName:S.stopName,destName:S.destName});
+  saveFavsToHash();renderFavs();
+  toast('✓ 已儲存！請將網址加入書籤以永久保留');
+}
+function delFav(e,i){e.stopPropagation();favs.splice(i,1);saveFavsToHash();renderFavs();toast('已刪除');}
+async function loadFav(i){
+  const f=favs[i];
+  document.getElementById('companySelect').value=f.company;
+  document.getElementById('routeInput').value=f.route;
+  document.getElementById('dirSelect').value=f.dir;
+  onCoChange(); S={...S,...f};
+  document.getElementById('etaBadge').textContent=f.route;
+  document.getElementById('etaDest').textContent='往 '+(f.destName||'終點站');
+  document.getElementById('etaSname').textContent=f.stopName;
+  f.company==='MTR'?document.getElementById('etaHead').classList.add('mtr'):document.getElementById('etaHead').classList.remove('mtr');
+  show('etaSection');await loadETA();
 }
 
-function delFav(e, idx){
-  e.stopPropagation();
-  inMemoryFavs.splice(idx,1);
-  saveFavsToHash(inMemoryFavs);
-  renderFavs();
-  showToast('已刪除');
-}
-
-async function loadFav(fav){
-  document.getElementById('companySelect').value = fav.company;
-  document.getElementById('routeInput').value = fav.route;
-  document.getElementById('dirSelect').value = fav.direction;
-  state = {...state, ...fav};
-  const isMtr = fav.company === 'MTR';
-  const header = document.getElementById('etaCardHeader');
-  if (isMtr) header.classList.add('mtr-header');
-  else header.classList.remove('mtr-header');
-  document.getElementById('etaSection').style.display = 'block';
-  document.getElementById('etaRouteBadge').textContent = fav.route;
-  document.getElementById('etaDest').textContent = '往 ' + (fav.destName||'終點站');
-  document.getElementById('etaStopName').textContent = fav.stopName;
-  document.getElementById('etaSection').scrollIntoView({behavior:'smooth', block:'start'});
-  await loadETA();
-}
-
-document.getElementById('routeInput').addEventListener('keydown', e => {
-  if (e.key === 'Enter') searchRoute();
-});
-
+document.getElementById('routeInput').addEventListener('keydown',e=>{if(e.key==='Enter')doSearch();});
 renderFavs();
 </script>
 </body>
